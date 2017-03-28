@@ -1,7 +1,9 @@
 package com.domain.auth
 
 import com.controller.BaseController
-import com.domain.auth.User
+import com.util.ExtJsUtil
+import com.util.ExtGrid
+import com.utils.Constants
 import grails.transaction.Transactional
 import org.springframework.http.HttpStatus
 
@@ -13,7 +15,22 @@ class UserController extends BaseController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+        println(params)
         respond User.list(params), model: [userCount: User.count()]
+    }
+
+    def extIndex() {
+        ExtGrid tableData = new ExtGrid(true, true)
+        tableData.addColumnData("User.username.label", Constants.DATATYPE_STRING, 100, true)
+        tableData.addColumnData("User.displayName.label", Constants.DATATYPE_STRING, 100, true)
+        tableData.addColumnData("User.email.label", Constants.DATATYPE_STRING, 100, true)
+        if (params.isJson) {
+            ExtJsUtil.formatPaging(params)
+            tableData.setDatas(User.list(params))
+            tableData.setTotalCount(User.count())
+            render(tableData.getDatas())
+        }
+        render(view: 'extIndex', model: [tableData: tableData])
     }
 
     def show(User user) {

@@ -1,5 +1,7 @@
 package com.taglib
 
+import com.utils.MyStringUtils
+
 class CustomizeTagLib {
     static defaultEncodeAs = [taglib: 'raw']
     def report = { attrs, body ->
@@ -10,7 +12,7 @@ class CustomizeTagLib {
 //        out << render(template: "/template/list")
 //    }
 
-    def myInput = { attrs, body ->
+    def wxInput = { attrs, body ->
         def field = attrs.get('field');
         def val = attrs.get('val');
         def inputType = attrs.get('inputType');
@@ -20,15 +22,13 @@ class CustomizeTagLib {
             inputType = "text"
         }
         if (!label) {
-            label = NpStringUtils.getLabelByField(field as String);
+            label = MyStringUtils.getLabelByField(field as String);
         }
         if (!notRequired) {
             notRequired = false;
         }
-        if (inputType == "date") {
-            val = ReportUtils.dateFormat_5.format(val);
-        }
-        out << render(template: "/report/myInput", model: [field: field, inputType: inputType, label: label, notRequired: notRequired, val: val])
+
+        out << render(template: "/wx/wxInput", model: [field: field, inputType: inputType, label: label, notRequired: notRequired, val: val])
     }
     def totalCount = { attrs ->
         def total = attrs.get('total');
@@ -39,5 +39,27 @@ class CustomizeTagLib {
         out << attrs.input
     }
 
+    def wxForm = { attrs ->
+        def apiOrg = attrs.get('apiOrg');
+        out << render(template: "/wx/wxForm", model: [apiOrg: apiOrg])
+    }
+    def wxSelect = { attrs, body ->
+        def field = attrs.get('field');
+        def from = attrs.get('from');
+        def optionKey = attrs.get('optionKey');
+        def optionValue = attrs.get('optionValue');
+        def val = attrs.get('val');
+        def label = attrs.get('label');
+        def notRequired = attrs.get('notRequired');
+
+        if (!label) {
+            label = MyStringUtils.getLabelByField(field as String);
+        }
+        if (!notRequired) {
+            notRequired = false;
+        }
+
+        out << render(template: "/wx/wxSelect", model: [field: field, from: from, label: label, notRequired: notRequired, val: val, optionValue: optionValue, optionKey: optionKey])
+    }
 
 }

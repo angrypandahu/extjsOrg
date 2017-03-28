@@ -2,8 +2,10 @@ package com.domain.auth
 
 import com.domain.BaseDomain
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
 @EqualsAndHashCode(includes = 'hierarchy')
+@ToString(includes = 'name', includeNames = true, includePackage = false)
 class Org extends BaseDomain {
     String hierarchy
     String parent

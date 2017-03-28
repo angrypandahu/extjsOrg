@@ -56,6 +56,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/registrationCode/**', access: ['ROLE_ADMIN']],
         [pattern: '/quartz/**', access: ['ROLE_ADMIN']],
         [pattern: '/privilege/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
+        [pattern: '/wx/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
+        [pattern: '/weChatSubscription/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
+        [pattern: '/apiOrg/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
+        [pattern: '/userApiOrg/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
         [pattern: '/rolePrivilege/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
         [pattern: '/menu/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
         [pattern: '/plugins/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
@@ -64,8 +68,10 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/userRole/index/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
         [pattern: '/user/updatePassword/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
         [pattern: '/user/saveMe/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
-        [pattern: '/reportGroup/index/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
-        [pattern: '/wx/**', access: ['permitAll']]
+        [pattern: '/org/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/apiAccount/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/userApiAccount/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/userOrg/**', access: ['ROLE_ADMIN', 'ROLE_USER']]
 
 ]
 
@@ -74,6 +80,7 @@ grails.plugin.springsecurity.secureChannel.secureHeaderName = 'X-Forwarded-Proto
 grails.plugin.springsecurity.secureChannel.secureHeaderValue = 'http'
 grails.plugin.springsecurity.secureChannel.insecureHeaderName = 'X-Forwarded-Proto'
 grails.plugin.springsecurity.secureChannel.insecureHeaderValue = 'https'
+grails.plugin.springsecurity.useSecurityEventListener = true
 
 grails.resources.pattern = '/**'
 

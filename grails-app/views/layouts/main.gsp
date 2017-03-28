@@ -39,7 +39,7 @@
             <a class="navbar-brand" href="/#">
                 <i class="fa grails-icon">
                     <asset:image src="grails-cupsonly-logo-white.svg" class="icolor_logo"/>
-                </i>Report
+                </i>Api
             </a>
 
 

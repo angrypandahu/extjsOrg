@@ -58,62 +58,62 @@ Ext.onReady(function () {
 //         html:'欢迎使用立邦电子商城系统！'
     };
 
-//     var store = Ext.create('Ext.data.TreeStore', {
-//         root: {
-//             expanded: true
-//         },
-//         proxy: {
-//             type: 'ajax',
-//             url:URL_PATH + '/baseinfo/privilege/GetMenu.do'
-//         }
-//     });
+    var store = Ext.create('Ext.data.TreeStore', {
+        root: {
+            expanded: true
+        },
+        proxy: {
+            type: 'ajax',
+            url: '/menu/getMenus'
+        }
+    });
 //
 //     // Go ahead and create the TreePanel now so that we can use it below
-//     var treePanel = Ext.create('Ext.tree.Panel', {
-//         id: 'tree-panel',
-//         title: '功能选择',
-//         region:'north',
-//         split: true,
-//         height: 360,
-//         minSize: 150,
-//         rootVisible: false,
-//         autoScroll: true,
-//         store: {}
-//     });
+    var treePanel = Ext.create('Ext.tree.Panel', {
+        id: 'tree-panel',
+        title: '功能选择',
+        region: 'north',
+        split: true,
+        height: 360,
+        minSize: 150,
+        rootVisible: false,
+        autoScroll: true,
+        store: store
+    });
 //
-//     treePanel.getSelectionModel().on('select', function(selModel, record) {
-//         if (record.get('leaf')) {
-//
-//             var url = record.get('hrefTarget');
-//             var title = record.get('text');
-//             var id = record.internalId;
-//             if (url == "/home/exit.do") {
-//                 if (window.confirm('是否退出系统？')) {
-//                     window.location.href = URL_PATH + url;
-//                 }
-//                 return;
-//             };
-//
-//             var tabs = Ext.getCmp('card-tabs-panel');
-//             if (tabs.queryById(id)) {
-//                 tabs.setActiveTab(id) ;
-//             } else {
-//
-//                 tabs.add({
-//                     closable:true,
-//                     id: id,
-//                     html: '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="' + URL_PATH + url + '"></iframe>',
-//                     icon: URL_PATH + '/images/tabs.gif',
-//                     title: record.get('text')
-//                 }).show();
-//             }
-//             treePanel.getSelectionModel().deselectAll();
-// //            var panel = Ext.getCmp('content-panel');
-// //            panel.setTitle(record.get('text'));
-// //            panel.body.update('<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="' + _GetURLPath() + url + '"></iframe>');
-//
-//         }
-//     });
+    treePanel.getSelectionModel().on('select', function (selModel, record) {
+        if (record.get('leaf')) {
+            var url = record.get('hrefTarget');
+            var title = record.get('text');
+            var id = record.internalId;
+            if (id == "logout") {
+                if (window.confirm('是否退出系统？')) {
+                    window.location.href = url;
+                }
+                return;
+            }
+
+
+            var tabs = Ext.getCmp('card-tabs-panel');
+            if (tabs.queryById(id)) {
+                tabs.setActiveTab(id);
+            } else {
+
+                tabs.add({
+                    closable: true,
+                    id: id,
+                    html: '<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="' + url + '"></iframe>',
+                    icon: '/assets/tabs.gif',
+                    title: record.get('text')
+                }).show();
+            }
+            treePanel.getSelectionModel().deselectAll();
+//            var panel = Ext.getCmp('content-panel');
+//            panel.setTitle(record.get('text'));
+//            panel.body.update('<iframe scrolling="auto" frameborder="0" width="100%" height="100%" src="' + _GetURLPath() + url + '"></iframe>');
+
+        }
+    });
 
     // This is the Details panel that contains the description for each example layout.
     var detailsPanel = {
@@ -151,13 +151,13 @@ Ext.onReady(function () {
                 width: 175,
                 minSize: 100,
                 maxSize: 300,
-                items: [detailsPanel]
+                items: [treePanel, detailsPanel]
             },
             contentPanel
         ]
     });
 
-    // Ext.getElementById("notepad").value = _GetNote();
+    Ext.getElementById("notepad").value = _GetNote();
 });
 
 

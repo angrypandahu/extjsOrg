@@ -1,18 +1,23 @@
 package com.domain.auth
 
 import com.controller.BaseController
+import com.domain.api.UserApiAccount
 import com.domain.auth.UserRole
+import com.utils.MyStringUtils
 import grails.transaction.Transactional
+import org.grails.web.json.JSONArray
+import org.grails.web.json.JSONObject
 import org.springframework.http.HttpStatus
 
 @Transactional(readOnly = true)
-class UserRoleController extends BaseController{
+class UserRoleController extends BaseController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def userRoleService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond UserRole.list(params), model:[userRoleCount: UserRole.count()]
+        respond UserRole.list(params), model: [userRoleCount: UserRole.count()]
     }
 
     def show(UserRole userRole) {
@@ -21,6 +26,13 @@ class UserRoleController extends BaseController{
 
     def create() {
         respond new UserRole(params)
+    }
+
+    def getUserRoles() {
+        def roleList = UserRole.findAllByUser(User.get(Long.parseLong(params.user)))?.role
+        def ret = new JSONObject()
+        ret.put("roleList", new JSONArray(roleList?.id))
+        render MyStringUtils.ajaxJSONReturnTrue(ret);
     }
 
     @Transactional
@@ -33,18 +45,18 @@ class UserRoleController extends BaseController{
 
         if (userRole.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond userRole.errors, view:'create'
+            respond userRole.errors, view: 'create'
             return
         }
 
-        userRole.save flush:true
+        userRole.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'userRole.label', default: 'UserRole'), userRole.user])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: HttpStatus.NO_CONTENT }
+            '*' { render status: HttpStatus.NO_CONTENT }
         }
     }
 
@@ -62,18 +74,18 @@ class UserRoleController extends BaseController{
 
         if (userRole.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond userRole.errors, view:'edit'
+            respond userRole.errors, view: 'edit'
             return
         }
 
-        userRole.save flush:true
+        userRole.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'userRole.label', default: 'UserRole'), userRole.id])
                 redirect userRole
             }
-            '*'{ respond userRole, [status: HttpStatus.OK] }
+            '*' { respond userRole, [status: HttpStatus.OK] }
         }
     }
 
@@ -86,15 +98,24 @@ class UserRoleController extends BaseController{
             return
         }
 
-        userRole.delete flush:true
+        userRole.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'userRole.label', default: 'UserRole'), userRole.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: HttpStatus.NO_CONTENT }
+            '*' { render status: HttpStatus.NO_CONTENT }
         }
+    }
+
+    @Transactional
+    def ajaxSave() {
+        def saveUserApiOrgs = userRoleService.saveUserRoles(params)
+        def ret = new JSONObject()
+        ret.put("count", saveUserApiOrgs.size())
+        render MyStringUtils.ajaxJSONReturnTrue(ret);
+
     }
 
     protected void notFound() {
@@ -103,7 +124,7 @@ class UserRoleController extends BaseController{
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'userRole.label', default: 'UserRole'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: HttpStatus.NOT_FOUND }
+            '*' { render status: HttpStatus.NOT_FOUND }
         }
     }
 }

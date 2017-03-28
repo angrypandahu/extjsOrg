@@ -1,6 +1,9 @@
 package com.domain.auth
 
 import com.controller.BaseController
+import com.utils.MyStringUtils
+import org.grails.web.json.JSONArray
+import org.grails.web.json.JSONObject
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -9,12 +12,26 @@ import grails.transaction.Transactional
 class RolePrivilegeController extends BaseController{
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+    def rolePrivilegeService
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond RolePrivilege.list(params), model:[rolePrivilegeCount: RolePrivilege.count()]
     }
 
+    @Transactional
+    def ajaxSave() {
+        def saveRolePrivileges = rolePrivilegeService.saveRolePrivileges(params)
+        def ret = new JSONObject()
+        ret.put("count", saveRolePrivileges.size())
+        render MyStringUtils.ajaxJSONReturnTrue(ret);
+
+    }
+    def getRolePrivileges() {
+        def privilegeList = RolePrivilege.findAllByRole(Role.get(Long.parseLong(params.role)))?.privilege
+        def ret = new JSONObject()
+        ret.put("privilegeList", new JSONArray(privilegeList?.id))
+        render MyStringUtils.ajaxJSONReturnTrue(ret);
+    }
     def show(RolePrivilege rolePrivilege) {
         respond rolePrivilege
     }
