@@ -56,63 +56,20 @@
 
 <body>
 
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            %{--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">--}%
-            %{--<span class="sr-only">Toggle navigation</span>--}%
-            %{--<span class="icon-bar"></span>--}%
-            %{--<span class="icon-bar"></span>--}%
-            %{--<span class="icon-bar"></span>--}%
-            %{--</button>--}%
-            <a class="navbar-brand" href="/#">
-                <i class="fa grails-icon">
-                    <asset:image src="grails-cupsonly-logo-white.svg" class="icolor_logo"/>
-                </i>Report
-            </a>
-
-
-            %{--<sec:ifLoggedIn>--}%
-            %{--<span class="my_right">--}%
-
-            %{--<a class="navbar-brand"><sec:loggedInUserInfo field='username'/> ,Welcome Back!</a>--}%
-            %{--<g:link controller='logout' class="navbar-brand">Logout</g:link>--}%
-
-            %{--</span>--}%
-            %{--</sec:ifLoggedIn>--}%
-            %{--<sec:ifNotLoggedIn>--}%
-            %{--<g:link controller='login' action='auth' class="navbar-brand my_right">Login</g:link>--}%
-            %{--</sec:ifNotLoggedIn>--}%
-
-        </div>
-        %{--<div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">--}%
-        %{--<ul class="nav navbar-nav navbar-right">--}%
-        %{--<g:pageProperty name="page.nav" />--}%
-        %{--</ul>--}%
-        %{--</div>--}%
-    </div>
-</div>
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-9">
             <g:layoutBody/>
         </div>
     </div>
 </div>
 
 
-<div class="footer" role="contentinfo"></div>
-
-<div id="spinner" class="spinner" style="display:none;">
-    <g:message code="spinner.alt" default="Loading&hellip;"/>
-</div>
-
-%{--<asset:javascript src="application.js"/>--}%
 
 </body>
 </html>

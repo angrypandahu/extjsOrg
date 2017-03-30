@@ -52,9 +52,16 @@ class UserApiAccountService {
                     saves.add(UserApiAccount.create(user, it))
                 }
             }
-            UserApiAccount.where {
-                user == user && !(apiAccount in apiAccounts)
-            }.deleteAll()
+            if (!apiAccounts) {
+                UserApiAccount.where {
+                    user == user
+                }.deleteAll()
+            } else {
+                UserApiAccount.where {
+                    user == user && !(apiAccount in apiAccounts)
+                }.deleteAll()
+            }
+
         }
         return saves
 

@@ -36,9 +36,9 @@
         <g:hiddenField name="version" value="${this.user?.version}"/>
         <g:hiddenField name="id" value="${this.user?.id}"/>
         <fieldset class="form">
-            <g:myInput field="currentPassword" inputType="password"/>
-            <g:myInput field="newPassword" inputType="password"/>
-            <g:myInput field="confirmPassword" inputType="password"/>
+            <g:wxInput field="currentPassword" inputType="password"/>
+            <g:wxInput field="newPassword" inputType="password"/>
+            <g:wxInput field="confirmPassword" inputType="password"/>
 
         </fieldset>
         <fieldset class="buttons">

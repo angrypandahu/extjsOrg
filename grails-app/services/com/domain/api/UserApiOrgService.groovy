@@ -24,8 +24,13 @@ class UserApiOrgService {
 
     def isAuth(User user, ApiOrg apiOrg) {
         def apiOrgs = UserApiOrg.findAllByUser(user)?.apiOrg
-        if (apiOrgs && apiOrgs.contains(apiOrg)) {
-            return true
+        if (apiOrgs) {
+            for (ApiOrg one : apiOrgs) {
+                def isStartWith = apiOrg.getHierarchy().startsWith(one.getHierarchy())
+                if (isStartWith) {
+                    return true
+                }
+            }
         }
         return false
     }
@@ -59,9 +64,16 @@ class UserApiOrgService {
                     saves.add(UserApiOrg.create(user, it))
                 }
             }
-            UserApiOrg.where {
-                user == user && !(apiOrg in apiOrgs)
-            }.deleteAll()
+            if (!apiOrgs) {
+                UserApiOrg.where {
+                    user == user
+                }.deleteAll()
+            } else {
+                UserApiOrg.where {
+                    user == user && !(apiOrg in apiOrgs)
+                }.deleteAll()
+            }
+
         }
         return saves
 

@@ -28,13 +28,21 @@ class UserRoleService {
                     saves.add(UserRole.create(user, it))
                 }
             }
-            UserRole.where {
-                user == user && !(role in listOfRoles)
-            }.deleteAll()
+            if (!listOfRoles) {
+                UserRole.where {
+                    user == user
+                }.deleteAll()
+            } else {
+                UserRole.where {
+                    user == user && !(role in listOfRoles)
+                }.deleteAll()
+            }
+
         }
         return saves
 
     }
+
     def serviceMethod() {
 
     }

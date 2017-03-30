@@ -30,7 +30,7 @@ Ext.require([
 Ext.onReady(function () {
 
     Ext.tip.QuickTipManager.init();
-
+    var userName = $("#LoginUserName").html();
 
     var contentPanel = {
         id: 'content-panel',
@@ -51,7 +51,7 @@ Ext.onReady(function () {
                 defaults: {bodyStyle: 'padding:3px'},
                 items: [{
                     title: '开始',
-                    html: '欢迎使用立邦电子商城管理系统！'
+                    html: '欢迎使用API管理系统！'
                 }]
             }
         ]
@@ -83,7 +83,7 @@ Ext.onReady(function () {
 //
     treePanel.getSelectionModel().on('select', function (selModel, record) {
         if (record.get('leaf')) {
-            var url = record.get('hrefTarget');
+            var url = record.get('hrefTarget') + "?isFrame=true";
             var title = record.get('text');
             var id = record.internalId;
             if (id == "logout") {
@@ -138,7 +138,7 @@ Ext.onReady(function () {
                 id: 'header',
                 region: 'north',
                 collapsible: false,
-                html: '<table width="100%"><tr><td><h5>立邦电子商城管理系统 </h5></td><td align="right":><h5>当前用户：' + 'admin' + ' </h5></td></tr></table>',
+                html: '<div style="height: 100%;font-size: 15px;line-height: 30px;padding-left: 7px;padding-right: 7px"> <span>API管理系统</span><span style="float: right">当前用户:' + userName + '</span></div>',
                 height: 30
             }, {
                 layout: 'border',

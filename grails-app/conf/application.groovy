@@ -19,7 +19,6 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.domain.auth.U
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.domain.auth.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.domain.auth.Role'
 grails.plugin.springsecurity.logout.postOnly = false// allows logout to work
-
 grails.plugin.springsecurity.filterChain.chainMap = [
         [pattern: '/assets/**', filters: 'none'],
         [pattern: '/**/js/**', filters: 'none'],
@@ -45,7 +44,6 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/console/**', access: ['ROLE_ADMIN']],
         [pattern: '/plugins/console/**', access: ['ROLE_ADMIN']],
         [pattern: '/static/console/**', access: ['ROLE_ADMIN']],
-        [pattern: '/ganttTasks/**', access: ['ROLE_ADMIN','ROLE_USER','ROLE_MANAGER']],
         [pattern: '/user/**', access: ['ROLE_ADMIN']],
         [pattern: '/persistentLogin/**', access: ['ROLE_ADMIN']],
         [pattern: '/role/**', access: ['ROLE_ADMIN']],
@@ -55,12 +53,12 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         [pattern: '/securityInfo/**', access: ['ROLE_ADMIN']],
         [pattern: '/registrationCode/**', access: ['ROLE_ADMIN']],
         [pattern: '/quartz/**', access: ['ROLE_ADMIN']],
-        [pattern: '/privilege/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
-        [pattern: '/wx/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
-        [pattern: '/weChatSubscription/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
-        [pattern: '/apiOrg/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
-        [pattern: '/userApiOrg/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
-        [pattern: '/rolePrivilege/**', access: ['ROLE_ADMIN', 'ROLE_ICOLOR']],
+        [pattern: '/privilege/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/wx/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/weChatSubscription/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/apiOrg/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/userApiOrg/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
+        [pattern: '/rolePrivilege/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
         [pattern: '/menu/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
         [pattern: '/plugins/**', access: ['ROLE_ADMIN', 'ROLE_USER']],
         [pattern: '/user/index/**', access: ['ROLE_ADMIN', 'ROLE_USER']],

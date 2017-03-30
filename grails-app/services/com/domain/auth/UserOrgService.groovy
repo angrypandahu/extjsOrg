@@ -34,9 +34,16 @@ class UserOrgService {
                     saves.add(UserOrg.create(user, it))
                 }
             }
-            UserOrg.where {
-                user == user && !(org in listOfOrgs)
-            }.deleteAll()
+            if (!listOfOrgs) {
+                UserOrg.where {
+                    user == user
+                }.deleteAll()
+            } else {
+                UserOrg.where {
+                    user == user && !(org in listOfOrgs)
+                }.deleteAll()
+            }
+
         }
         return saves
 

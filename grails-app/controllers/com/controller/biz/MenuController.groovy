@@ -46,7 +46,6 @@ class MenuController extends BaseController {
     }
 
 
-
     def getMenus() {
         User user = getAuthenticatedUser()
         def findAll = menuService.findAllMenus(user)
